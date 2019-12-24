@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "defines": [],
+            "includePath": [
+                "${default}",
+                "/usr/include/x86_64-linux-gnu"
+            ]
+        }
+    ],
+    "version": 4
+}
