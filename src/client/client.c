@@ -3,7 +3,7 @@
 #ifndef OS_THREAD
 #error "this module must need OS Support"
 #endif
-
+char initFlag = 0;
 ClientSocket_t *Client_open(char *ip, unsigned short port)
 {
     unsigned int ipnum = 0;
