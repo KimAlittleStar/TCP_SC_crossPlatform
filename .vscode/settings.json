@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "time.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "server_socket.h": "c",
+        "client.h": "c",
+        "udp.h": "c"
     }
 }

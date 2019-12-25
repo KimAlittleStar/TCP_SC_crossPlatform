@@ -47,11 +47,10 @@ int main(int argc, char **argv)
     //设置协议及Port
     memset(&serveraddr, 0, sizeof(serveraddr));
     serveraddr.sin_family = AF_INET;
-    serveraddr.sin_port = htons(1024);
+    serveraddr.sin_port = htons(10001);
 
     //设置IP
     serveraddr.sin_addr.s_addr = inet_addr(argv[1]);
-
     //连接
     if (connect(sockfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) == -1)
     {
@@ -68,6 +67,7 @@ int main(int argc, char **argv)
             printf("fputs() error\r\n");
         }
     }
+    printf("socket off line\n");
 
     //没有获取数据
     if (n < 0)

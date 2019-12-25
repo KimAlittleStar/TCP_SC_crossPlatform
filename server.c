@@ -5,6 +5,7 @@
 
 #ifdef __MINGW32__
 #include <winsock2.h>
+#define sleep(n) Sleep(1000 * (n))
 #else
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
     //设置IP
     serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
     //设置Port
-    serveraddr.sin_port = htons(1024);
+    serveraddr.sin_port = htons(10001);
 
     //绑定端口，监听1024端口的任何请求
     printf("bind()\n");
@@ -83,6 +84,7 @@ int main(int argc, char *argv[])
         //写入时间
         //关闭请求
         send(connectfd, buff, strlen(buff), 0);
+        sleep(5);
 #ifdef __MINGW32__
         closesocket(connectfd);
 #else
