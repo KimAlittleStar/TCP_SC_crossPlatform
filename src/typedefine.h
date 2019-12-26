@@ -22,7 +22,6 @@
 #define _DEBUG_LOG
 #define _DEBUG_INFO
 #define _DEBUG_WARNINR
-#define K_ERROR
 
 #else
 #define dprintf(ftm, ...)
@@ -87,7 +86,7 @@ typedef struct
 ///< OS thread define
 #define OS_THREAD 1
 #ifdef OS_THREAD
-typedef void (*newSubThreadByClientSocket)(ServerSocket_t *server, ClientSocket_t *soc); //传值等请根据自定义修改
+typedef void (*newSubThreadByClientSocket)(void *args); //传值等请根据自定义修改
 #endif
 
 ///< mingw - socket prepare

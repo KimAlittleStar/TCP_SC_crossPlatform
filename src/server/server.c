@@ -47,7 +47,7 @@ ServerSocket_t *Server_open(unsigned short port, int maxConnet)
         return NULL;
     }
     server->clients = VCT_newVCT_ClientSocket_t();
-    server->clients->deleteSub = Client_close;
+    server->clients->deleteSub = (void (*)(const ClientSocket_t *))Client_close;
     return server;
 }
 
@@ -65,6 +65,7 @@ ClientSocket_t *Server_waitNewConnection(ServerSocket_t *server)
     CLIENT_FD clientfd = WSABASEERR;
     struct sockaddr saddr;
     int size = sizeof(saddr);
+    K_INFOMATION("%s\n", "accept");
     clientfd = accept(server->fd, &saddr, &size);
     if (clientfd < WSABASEERR)
     {
@@ -87,6 +88,7 @@ ClientSocket_t *Server_waitNewConnection(ServerSocket_t *server)
             server->clients->append(server->clients, subClient);
         return subClient;
     }
+    K_ERROR("%s\n", "accept");
     return NULL;
 }
 
@@ -129,6 +131,8 @@ void Server_close(ServerSocket_t *local)
 pthread_t Server_NewClinetThread(newSubThreadByClientSocket func, ServerSocket_t *server, ClientSocket_t *soc)
 {
     pthread_t ret;
+    K_INFOMATION("%s\n", "new thread");
+    //void **agrs = (void **)malloc(sizeof(void *) * 2);
     void *agrs[2];
     agrs[0] = server;
     agrs[1] = soc;

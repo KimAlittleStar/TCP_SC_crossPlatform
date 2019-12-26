@@ -103,6 +103,7 @@ void Client_close(ClientSocket_t *local)
 {
     if (local == NULL)
         return;
+    K_INFOMATION("close exce local: %s\n", local->name);
 #ifdef __MINGW32__
     closesocket(local->fd);
 #else

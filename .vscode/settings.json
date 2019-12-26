@@ -4,6 +4,7 @@
         "stdio.h": "c",
         "server_socket.h": "c",
         "client.h": "c",
-        "udp.h": "c"
+        "udp.h": "c",
+        "server.h": "c"
     }
 }
