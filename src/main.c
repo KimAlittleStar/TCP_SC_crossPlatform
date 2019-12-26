@@ -6,7 +6,7 @@
 
 void subServerSocketHandel(void *args);
 
-#define SERVER
+//#define SERVER
 int main(void)
 {
 #ifdef CLIENT
@@ -34,6 +34,9 @@ int main(void)
     }
     return 0;
 #elif defined(UDP)
+    return 0;
+#else
+    printf("you shuld macro \"CLIENT\" or \"SERVER\" or \"\"UDP\"\n");
     return 0;
 #endif
 }
