@@ -9,6 +9,7 @@
 #define sleep(n) Sleep(1000 * (n))
 #else
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -82,6 +83,11 @@ typedef struct
     char name[21];
     VCT_ClientSocket_t *clients;
 } ServerSocket_t;
+#ifdef __MINGW32__
+#define Server_FD_ERROR WSABASEERR
+#else
+#define Server_FD_ERROR 10000
+#endif
 
 ///< OS thread define
 #define OS_THREAD 1
@@ -112,23 +118,23 @@ extern char initFlag;
 #endif
 
 // 获取 域名和合法地址的IP  Get the IP of the domain name and the legal address
-#define Socket_assert_IP(ipNum, ipChar, defeatValue)                       \
-    do                                                                     \
-    {                                                                      \
-        struct hostent *host = gethostbyname(ipChar);                      \
-        if (host == NULL)                                                  \
-        {                                                                  \
-            ipNum = inet_addr(ipChar);                                     \
-            if (ipNum == INADDR_NONE)                                      \
-            {                                                              \
-                K_ERROR("Get IP address error!");                          \
-                return defeatValue;                                        \
-            }                                                              \
-        }                                                                  \
-        else                                                               \
-        {                                                                  \
-            ipNum = ((struct in_addr *)host->h_addr_list[0])->S_un.S_addr; \
-        }                                                                  \
+#define Socket_assert_IP(ipNum, ipChar, defeatValue)                  \
+    do                                                                \
+    {                                                                 \
+        struct hostent *host = gethostbyname(ipChar);                 \
+        if (host == NULL)                                             \
+        {                                                             \
+            ipNum = inet_addr(ipChar);                                \
+            if (ipNum == INADDR_NONE)                                 \
+            {                                                         \
+                K_ERROR("Get IP address error!");                     \
+                return defeatValue;                                   \
+            }                                                         \
+        }                                                             \
+        else                                                          \
+        {                                                             \
+            ipNum = ((struct in_addr *)host->h_addr_list[0])->s_addr; \
+        }                                                             \
     } while (0)
 
 #define Socket_VCT_contain(V, ele, defeatValue)                                        \
@@ -145,4 +151,5 @@ extern char initFlag;
         if (i == V->size)                                                              \
             return defeatValue;                                                        \
     } while (0)
+
 #endif // _typedefine_h

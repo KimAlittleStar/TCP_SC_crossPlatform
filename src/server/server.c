@@ -62,12 +62,12 @@ ClientSocket_t *Server_hasNewConnection(ServerSocket_t *server)
 
 ClientSocket_t *Server_waitNewConnection(ServerSocket_t *server)
 {
-    CLIENT_FD clientfd = WSABASEERR;
+    CLIENT_FD clientfd = Server_FD_ERROR;
     struct sockaddr saddr;
     int size = sizeof(saddr);
     K_INFOMATION("%s\n", "accept");
     clientfd = accept(server->fd, &saddr, &size);
-    if (clientfd < WSABASEERR)
+    if (clientfd < Server_FD_ERROR)
     {
         ClientSocket_t *subClient = (ClientSocket_t *)malloc(sizeof(ClientSocket_t));
         memset(subClient, 0, sizeof(ClientSocket_t));
@@ -133,7 +133,7 @@ pthread_t Server_NewClinetThread(newSubThreadByClientSocket func, ServerSocket_t
     pthread_t ret;
     K_INFOMATION("%s\n", "new thread");
     //void **agrs = (void **)malloc(sizeof(void *) * 2);
-    void *agrs[2];
+    void **agrs = (void **)malloc(sizeof(void *) * 2);
     agrs[0] = server;
     agrs[1] = soc;
     pthread_create(&ret, NULL, (void *)func, agrs);

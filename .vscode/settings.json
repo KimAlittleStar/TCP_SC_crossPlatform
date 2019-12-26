@@ -2,9 +2,11 @@
     "files.associations": {
         "time.h": "c",
         "stdio.h": "c",
-        "server_socket.h": "c",
         "client.h": "c",
-        "udp.h": "c",
+        "typedefine.h": "c",
+        "cvector.h": "c",
+        "types.h": "c",
+        "unistd.h": "c",
         "server.h": "c"
     }
 }
